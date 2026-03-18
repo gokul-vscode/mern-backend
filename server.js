@@ -1,9 +1,5 @@
+require("dotenv").config();
 
-
-
-
-
-require("dotenv").config(); // 1. Ithu thaan top-la irukanum
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -23,13 +19,24 @@ app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/orders", orderRoutes);
 
-// 2. Local link-ah remove pannitu process.env.MONGO_URI kudukanum
-mongoose.connect(process.env.MONGO_URI)
-.then(()=>console.log("✅ MongoDB Connected to Atlas"))
-.catch(err=>console.log("❌ DB Connection Error:", err));
+// 🔥 IMPORTANT FIX
+const startServer = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI, {
+      serverSelectionTimeoutMS: 30000,
+    });
 
-// 3. Port-ah dynamic-ah mathanum (Render-kaga)
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, ()=>{
-    console.log(`Server running on port ${PORT}`);
-});
+    console.log("✅ MongoDB Connected to Atlas");
+
+    const PORT = process.env.PORT || 5000;
+
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on port ${PORT}`);
+    });
+
+  } catch (err) {
+    console.log("❌ DB Connection Error:", err);
+  }
+};
+
+startServer();

@@ -1,10 +1,36 @@
+// const mongoose = require("mongoose");
+
+// const productSchema = new mongoose.Schema({
+//   productId: {
+//     type: String,
+//     required: true
+//   },
+//   productName: {
+//     type: String,
+//     required: true
+//   },
+//   productPrice: {
+//     type: Number,
+//     required: true
+//   },
+//   image: {
+//     type: String
+//   },
+//   stock: {
+//     type: Number,
+//     default: 0
+//   },
+//   category: {
+//     type: String
+//   }
+// });
+
+// module.exports = mongoose.model("Product", productSchema);
+
+
 const mongoose = require("mongoose");
 
 const productSchema = new mongoose.Schema({
-  productId: {
-    type: String,
-    required: true
-  },
   productName: {
     type: String,
     required: true
@@ -13,16 +39,12 @@ const productSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  image: {
-    type: String
-  },
+  image: String,
   stock: {
     type: Number,
     default: 0
   },
-  category: {
-    type: String
-  }
+  category: String
 });
 
 module.exports = mongoose.model("Product", productSchema);
